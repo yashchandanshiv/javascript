@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Array Operations</title>
+  </head>
+
+  <body>
+    <h1>JavaScript Array Operations</h1>
+
+    <label>Enter Array Length:</label>
+    <input type="number" id="length" />
+
+    <button onclick="createArray()">Create Array</button>
+
+    <br /><br />
+
+    <p id="arrayDisplay"></p>
+
+    <hr />
+
+    <h2>1. Remove Element</h2>
+
+    <input type="text" id="deleteValue" placeholder="Enter element to delete" />
+
+    <button onclick="deleteUsingMethod()">Delete (Using Method)</button>
+
+    <button onclick="deleteWithoutMethod()">Delete (Without Method)</button>
+
+    <hr />
+
+    <h2>2. Search Element</h2>
+
+    <input type="text" id="searchValue" placeholder="Enter value to search" />
+
+    <button onclick="searchUsingMethod()">Search (Using Method)</button>
+
+    <button onclick="searchWithoutMethod()">Search (Without Method)</button>
+
+    <hr />
+
+    <h2>3. Empty Array</h2>
+
+    <button onclick="emptyUsingMethod()">Empty (Using Method)</button>
+
+    <button onclick="emptyWithoutMethod()">Empty (Without Method)</button>
+
+    <h3 id="result"></h3>
+
+    <script>
+      let arr = [];
+
+      // Create Array
+      function createArray() {
+        let n = Number(document.getElementById("length").value);
+
+        if (!Number.isInteger(n) || n <= 0) {
+          alert("Enter a valid array length");
+          return;
+        }
+
+        arr = [];
+
+        for (let i = 0; i < n; i++) {
+          let value = prompt("Enter element " + (i + 1));
+
+          if (value === null) {
+            arr = [];
+            break;
+          }
+
+          arr[i] = value;
+        }
+
+        displayArray();
+      }
+
+      // Display Array
+      function displayArray() {
+        document.getElementById("arrayDisplay").innerHTML =
+          "Array: " + arr.join(", ");
+      }
+
+      // 1. Delete using standard array methods
+      function deleteUsingMethod() {
+        let value = document.getElementById("deleteValue").value;
+
+        let index = arr.indexOf(value);
+
+        if (index !== -1) {
+          arr.splice(index, 1);
+
+          document.getElementById("result").innerHTML =
+            "Element deleted successfully";
+        } else {
+          document.getElementById("result").innerHTML = "Element not found";
+        }
+
+        displayArray();
+      }
+
+      // 2. Delete without standard array methods
+      function deleteWithoutMethod() {
+        let value = document.getElementById("deleteValue").value;
+
+        let index = -1;
+
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] === value) {
+            index = i;
+            break;
+          }
+        }
+
+        if (index !== -1) {
+          for (let i = index; i < arr.length - 1; i++) {
+            arr[i] = arr[i + 1];
+          }
+
+          arr.length--;
+
+          document.getElementById("result").innerHTML =
+            "Element deleted successfully";
+        } else {
+          document.getElementById("result").innerHTML = "Element not found";
+        }
+
+        displayArray();
+      }
+
+      // 3. Search using standard array methods
+      function searchUsingMethod() {
+        let value = document.getElementById("searchValue").value;
+
+        if (arr.includes(value)) {
+          document.getElementById("result").innerHTML =
+            "Element is present in array";
+        } else {
+          document.getElementById("result").innerHTML =
+            "Element is not present in array";
+        }
+      }
+
+      // 4. Search without standard array methods
+      function searchWithoutMethod() {
+        let value = document.getElementById("searchValue").value;
+
+        let found = false;
+
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i] === value) {
+            found = true;
+            break;
+          }
+        }
+
+        if (found) {
+          document.getElementById("result").innerHTML =
+            "Element is present in array";
+        } else {
+          document.getElementById("result").innerHTML =
+            "Element is not present in array";
+        }
+      }
+
+      // 5. Empty array using standard array method
+      function emptyUsingMethod() {
+        arr.splice(0, arr.length);
+
+        document.getElementById("result").innerHTML =
+          "Array emptied successfully";
+
+        displayArray();
+      }
+
+      // 6. Empty array without using array methods
+      function emptyWithoutMethod() {
+        arr.length = 0;
+
+        document.getElementById("result").innerHTML =
+          "Array emptied successfully";
+
+        displayArray();
+      }
+    </script>
+  </body>
+</html>

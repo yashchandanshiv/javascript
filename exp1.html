@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Area Calculator</h1>
+    <h2>Circle</h2>
+    <label>radius: </label>
+    <input type="number" id="rad" />
+    <br />
+
+    <button id="addBtn" onclick="areaCircle()">Calculate</button>
+
+    <p id="circleResult"></p>
+
+    <h2>Rectangle</h2>
+    <label>Enter Width</label>
+    <input type="number" id="width" />
+    <input type="number" id="length" />
+    <br />
+
+    <button id="areaRect" onclick="areaRectangle()">Calculate</button>
+    <p id="rectResult"></p>
+
+    <h2>Triangle</h2>
+    <label>Enter a</label>
+    <input type="number" id="a" />
+    <input type="number" id="b" />
+    <input type="number" id="c" />
+    <br />
+
+    <button id="areaTriangle" onclick="areaTriangle()">Calculate</button>
+    <p id="triangleResult"></p>
+
+    <script>
+      function areaCircle() {
+        let r = document.getElementById("rad").value;
+
+        let area = Math.PI * r * r;
+        document.getElementById("circleResult").innerHTML = "Area : " + area;
+      }
+
+      function areaRectangle() {
+        let width = document.getElementById("width").value;
+        let length = document.getElementById("length").value;
+
+        let area = Number(width) * Number(length);
+        document.getElementById("rectResult").innerHTML = "Area : " + area;
+      }
+
+      function areaTriangle() {
+        let a = Number(document.getElementById("a").value);
+        let b = Number(document.getElementById("b").value);
+        let c = Number(document.getElementById("c").value);
+
+        let s = (a + b + c) / 2;
+        let area = Math.sqrt(s * (s - a) * (s - b) * (s - c));
+        document.getElementById("triangleResult").innerHTML = "Area : " + area;
+      }
+    </script>
+  </body>
+</html>

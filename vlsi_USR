@@ -1,0 +1,182 @@
+#Design Code
+
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity UNI_Shift_Register is
+Port (
+    rst  : in STD_LOGIC;
+    clk  : in STD_LOGIC;
+    Sin  : in STD_LOGIC;
+    mode : in STD_LOGIC_VECTOR(1 downto 0);
+    Pin  : in STD_LOGIC_VECTOR(3 downto 0);
+    Sout : out STD_LOGIC;
+    Pout : out STD_LOGIC_VECTOR(3 downto 0)
+);
+end UNI_Shift_Register;
+
+architecture behavior of UNI_Shift_Register is
+
+signal temp : STD_LOGIC_VECTOR(3 downto 0) := "0000";
+
+begin
+
+process(rst, clk)
+begin
+    if rst = '1' then
+        temp <= "0000";
+        Pout <= "0000";
+        Sout <= '0';
+
+    elsif falling_edge(clk) then
+        case mode is
+            when "00" =>
+                temp <= temp(2 downto 0) & Sin;
+                Sout <= temp(3);
+                Pout <= "0000";
+
+            when "01" =>
+                temp <= temp(2 downto 0) & Sin;
+                Pout <= temp;
+                Sout <= '0';
+
+            when "10" =>
+                temp <= Pin;
+                Sout <= '0';
+                Pout <= "0000";
+
+            when others =>
+                Pout <= Pin;
+                Sout <= '0';
+
+        end case;
+    end if;
+end process;
+
+end behavior;
+
+
+#TestBench
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity UNI_Shift_Register_tb is
+end UNI_Shift_Register_tb;
+
+architecture behavior of UNI_Shift_Register_tb is
+
+component UNI_Shift_Register
+Port (
+    rst  : in STD_LOGIC;
+    clk  : in STD_LOGIC;
+    Sin  : in STD_LOGIC;
+    mode : in STD_LOGIC_VECTOR(1 downto 0);
+    Pin  : in STD_LOGIC_VECTOR(3 downto 0);
+    Sout : out STD_LOGIC;
+    Pout : out STD_LOGIC_VECTOR(3 downto 0)
+);
+end component;
+
+signal rst  : STD_LOGIC := '0';
+signal clk  : STD_LOGIC := '1';
+signal Sin  : STD_LOGIC := '0';
+signal mode : STD_LOGIC_VECTOR(1 downto 0) := "00";
+signal Pin  : STD_LOGIC_VECTOR(3 downto 0) := "1010";
+
+signal Sout : STD_LOGIC;
+signal Pout : STD_LOGIC_VECTOR(3 downto 0);
+
+begin
+
+uut: UNI_Shift_Register PORT MAP (
+    rst => rst,
+    clk => clk,
+    Sin => Sin,
+    mode => mode,
+    Pin => Pin,
+    Sout => Sout,
+    Pout => Pout
+);
+
+-- Clock generation
+clk_process: process
+begin
+    clk <= NOT clk;
+    wait for 5 ns;
+end process;
+
+-- Mode selection
+stim_proc_mode: process
+begin
+    mode <= "00";
+    wait for 80 ns;
+
+    mode <= "01";
+    wait for 50 ns;
+
+    mode <= "10";
+    wait for 50 ns;
+
+    mode <= "11";
+    wait for 20 ns;
+
+    wait;
+end process;
+
+-- Serial input
+stim_proc_Sin: process
+begin
+    Sin <= '0';
+    wait for 10 ns;
+
+    Sin <= '1';
+    wait for 10 ns;
+
+    Sin <= '0';
+    wait for 10 ns;
+
+    Sin <= '1';
+    wait for 10 ns;
+
+    Sin <= '0';
+    wait;
+end process;
+
+-- Reset
+stim_proc_rst: process
+begin
+    rst <= '0';
+    wait for 122.5 ns;
+
+    rst <= '1';
+    wait for 5 ns;
+
+    rst <= '0';
+    wait;
+end process;
+
+end behavior;
+
+
+
+
+
+# PlanAhead Generated physical constraints
+NET "clk" LOC = P132;
+NET "rst" LOC = P204;
+NET "mode[1]" LOC = P205;
+NET "mode[0]" LOC = P206;
+NET "Sin" LOC = P203;
+NET "Pin[3]" LOC = P202;
+NET "Pin[2]" LOC = P197;
+NET "Pin[1]" LOC = P199;
+NET "Pin[0]" LOC = P196;
+NET "Sout" LOC = P193;
+NET "Pout[3]" LOC = P186;
+NET "Pout[2]" LOC = P187;
+NET "Pout[1]" LOC = P185;
+NET "Pout[0]" LOC = P181;

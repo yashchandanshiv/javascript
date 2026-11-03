@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Student Information Form</title>
+  </head>
+
+  <body>
+    <h1>Student Information Form</h1>
+
+    <form onsubmit="validateForm(event)">
+      Name:
+      <input type="text" id="name" />
+      <br /><br />
+
+      Address:
+      <input type="text" id="address" />
+      <br /><br />
+
+      City:
+      <input type="text" id="city" />
+      <br /><br />
+
+      State:
+      <input type="text" id="state" />
+      <br /><br />
+
+      Gender:
+      <select id="gender">
+        <option value="">Select Gender</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+      <br /><br />
+
+      Mobile Number:
+      <input type="text" id="mobile" />
+      <br /><br />
+
+      Email:
+      <input type="text" id="email" />
+      <br /><br />
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+      function validateForm(event) {
+        event.preventDefault();
+
+        // Get all input values
+        let name = document.getElementById("name").value.trim();
+        let address = document.getElementById("address").value.trim();
+        let city = document.getElementById("city").value.trim();
+        let state = document.getElementById("state").value.trim();
+        let gender = document.getElementById("gender").value;
+        let mobile = document.getElementById("mobile").value.trim();
+        let email = document.getElementById("email").value.trim();
+
+        let result = document.getElementById("result");
+
+        // Check empty fields
+        if (
+          name == "" ||
+          address == "" ||
+          city == "" ||
+          state == "" ||
+          gender == "" ||
+          mobile == "" ||
+          email == ""
+        ) {
+          result.innerHTML = "Please fill all fields";
+          return;
+        }
+
+        // Name validation
+        let namePattern = /^[A-Za-z ]+$/;
+
+        if (!namePattern.test(name)) {
+          result.innerHTML = "Invalid Name. Enter alphabets only.";
+          return;
+        }
+
+        // Mobile validation
+        let mobilePattern = /^[0-9]{10}$/;
+
+        if (!mobilePattern.test(mobile)) {
+          result.innerHTML = "Enter valid 10 digit mobile number";
+          return;
+        }
+
+        // Email validation
+        let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+          result.innerHTML = "Enter valid Email ID";
+          return;
+        }
+
+        // Successful submission
+        document.getElementById("result").innerHTML =
+          "Congratulations! Welcome " +
+          name +
+          "<br>Address: " +
+          address +
+          "<br>City: " +
+          city +
+          "<br>State: " +
+          state +
+          "<br>Gender: " +
+          gender +
+          "<br>Mobile: " +
+          mobile +
+          "<br>Email: " +
+          email;
+      }
+    </script>
+  </body>
+</html>

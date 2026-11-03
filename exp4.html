@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <title>String Comparison</title>
+  </head>
+  <body>
+    <h1>String Comparison Methods</h1>
+
+    <label>Enter First String:</label>
+    <input type="text" id="string1" />
+
+    <br /><br />
+
+    <label>Enter Second String:</label>
+    <input type="text" id="string2" />
+
+    <br /><br />
+
+    <button onclick="compareStrings()">Compare Strings</button>
+
+    <h3>Results:</h3>
+    <p id="result"></p>
+
+    <script>
+      function compareStrings() {
+        let str1 = document.getElementById("string1").value;
+        let str2 = document.getElementById("string2").value;
+
+        let output = "";
+
+        // 1. Strict Equality Operator
+        if (str1 === str2) {
+          output += "Both strings are equal.<br>";
+        } else {
+          output += "Both strings are not equal.<br>";
+        }
+
+        // 2. Comparing String Length
+        if (str1.length === str2.length) {
+          output += "Both strings have equal length.<br>";
+        } else if (str1.length > str2.length) {
+          output += "First string is longer.<br>";
+        } else {
+          output += "Second string is longer.<br>";
+        }
+
+        // 3. localeCompare() Method
+        let comparison = str1.localeCompare(str2);
+
+        if (comparison === 0) {
+          output += "Both strings are alphabetically equal.";
+        } else if (comparison < 0) {
+          output += "First string comes before second string.";
+        } else {
+          output += "First string comes after second string.";
+        }
+
+        document.getElementById("result").innerHTML = output;
+      }
+    </script>
+  </body>
+</html>

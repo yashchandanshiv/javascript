@@ -1,0 +1,153 @@
+#Main Code
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity ALU_4bit is
+Port (
+    A : in STD_LOGIC_VECTOR(3 downto 0);
+    B : in STD_LOGIC_VECTOR(3 downto 0);
+    F : in STD_LOGIC_VECTOR(2 downto 0);
+    Y : out STD_LOGIC_VECTOR(3 downto 0);
+    C_B : out STD_LOGIC
+);
+end ALU_4bit;
+
+architecture ALU_4bit_arch of ALU_4bit is
+
+signal result : unsigned(4 downto 0);
+
+begin
+
+process(A, B, F)
+begin
+    case F is
+
+        when "000" =>
+            result <= '0' & (unsigned(A) AND unsigned(B));
+
+        when "001" =>
+            result <= '0' & (unsigned(A) NAND unsigned(B));
+
+        when "010" =>
+            result <= '0' & (unsigned(A) OR unsigned(B));
+
+        when "011" =>
+            result <= '0' & (unsigned(A) XOR unsigned(B));
+
+        when "100" =>
+            result <= '0' & (unsigned(A) XNOR unsigned(B));
+
+        when "101" =>
+            result <= '0' & (unsigned(A) NOR unsigned(B));
+
+        when "110" =>
+            result <= ('0' & unsigned(A)) + ('0' & unsigned(B));
+
+        when others =>
+            result <= ('0' & unsigned(A)) - ('0' & unsigned(B));
+
+    end case;
+end process;
+
+Y <= std_logic_vector(result(3 downto 0));
+C_B <= result(4);
+
+end ALU_4bit_arch;
+
+
+
+#TestBench
+
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+entity ALU_4bit_tb is
+end ALU_4bit_tb;
+
+architecture behavior of ALU_4bit_tb is
+
+component ALU_4bit
+Port (
+    A : in STD_LOGIC_VECTOR(3 downto 0);
+    B : in STD_LOGIC_VECTOR(3 downto 0);
+    F : in STD_LOGIC_VECTOR(2 downto 0);
+    Y : out STD_LOGIC_VECTOR(3 downto 0);
+    C_B : out STD_LOGIC
+);
+end component;
+
+signal A : STD_LOGIC_VECTOR(3 downto 0) := "0010";
+signal B : STD_LOGIC_VECTOR(3 downto 0) := "1111";
+signal F : STD_LOGIC_VECTOR(2 downto 0) := "000";
+
+signal Y : STD_LOGIC_VECTOR(3 downto 0);
+signal C_B : STD_LOGIC;
+
+begin
+
+uut: ALU_4bit PORT MAP(
+    A => A,
+    B => B,
+    F => F,
+    Y => Y,
+    C_B => C_B
+);
+
+process
+begin
+
+    F <= "000";
+    wait for 25 ns;
+
+    F <= "001";
+    wait for 25 ns;
+
+    F <= "010";
+    wait for 25 ns;
+
+    F <= "011";
+    wait for 25 ns;
+
+    F <= "100";
+    wait for 25 ns;
+
+    F <= "101";
+    wait for 25 ns;
+
+    F <= "110";
+    wait for 25 ns;
+
+    F <= "111";
+    wait for 25 ns;
+
+    wait;
+
+end process;
+
+end behavior;
+
+
+
+# PlanAhead Generated physical constraints
+NET "A[3]" LOC = P205;
+NET "A[2]" LOC = P206;
+NET "A[1]" LOC = P203;
+NET "A[0]" LOC = P200;
+NET "B[3]" LOC = P192;
+NET "B[2]" LOC = P193;
+NET "B[1]" LOC = P189;
+NET "B[0]" LOC = P190;
+NET "F[2]" LOC = P179;
+NET "F[1]" LOC = P180;
+NET "F[0]" LOC = P177;
+NET "Y[3]" LOC = P165;
+NET "Y[2]" LOC = P167;
+NET "Y[1]" LOC = P163;
+NET "Y[0]" LOC = P164;
+NET "C_B" LOC = P153;

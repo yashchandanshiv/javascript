@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multiplication Table</title>
+  </head>
+  <body>
+    <h1>Multiplication Table></h1>
+    <input type="number" id="num1" />
+    <button onclick="createTablefor()">Show Table</button>
+    <!-- <br />
+    <input type="number" id="num2" />
+    <button onclick="createTableWhile()">show table</button>
+    <p id="result"></p>  -->
+    <p id="result"></p>
+
+    <script>
+      function createTablefor() {
+        let a = document.getElementById("num1").value;
+
+        let result = "";
+        result += "<h2>using for loop</h2>";
+
+        for (let i = 1; i <= 10; i++) {
+          result += a + " * " + i + " = " + a * i + "<br>";
+        }
+
+        result += "<h3>Using While Loop</h3>";
+        let k = 1;
+
+        while (k <= 10) {
+          result += a + " * " + k + " = " + a * k + "<br>";
+
+          k++;
+        }
+
+        result += "<h3>Using Do-While-Loop</h3>";
+        let d = 1;
+        do {
+          result += a + " * " + d + " = " + a * d + "<br>";
+          d++;
+        } while (d <= 10);
+
+        document.getElementById("result").innerHTML = result;
+      }
+
+      // function createTableWhile() {
+      //   let a = Number(document.getElementById("num2").value);
+      //   let result = "";
+      //   result += "<h3>using while loop</h3> ";
+
+      //   let k = 1;
+
+      //   while (k <= 10) {
+      //     result += a + " * " + k + " = " + a * k + "<br>";
+
+      //     k++;
+      //   }
+
+      //   document.getElementById("result").innerHTML = result;
+      // }
+    </script>
+  </body>
+</html>

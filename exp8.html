@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Background Color Change</title>
+</head>
+
+<body id="myBody">
+
+    <h1>Home Page</h1>
+
+    <h2>Mouse Over Event</h2>
+
+    <div onmouseover="changeColor()"
+         style="height:150px; width:300px; background-color:lightblue;">
+
+        <h3>Move Mouse Here</h3>
+
+    </div>
+
+    <h2>Focus Event</h2>
+
+    <input type="text" id="myInput"
+        placeholder="Click here"
+        onfocus="focusColor()">
+
+    <script>
+
+        // Mouse Over Event
+        function changeColor() {
+
+            document.getElementById("myBody").style.backgroundColor =
+                "lightgreen";
+
+        }
+
+        // Focus Event
+        function focusColor() {
+
+            document.getElementById("myBody").style.backgroundColor =
+                "lightpink";
+
+        }
+
+    </script>
+
+</body>
+</html>

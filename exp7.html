@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Array Objects</title>
+  </head>
+
+  <body>
+    <h1>Array and Array Objects</h1>
+
+    <label>Enter Array Size:</label>
+    <input type="number" id="size" />
+
+    <button onclick="createArray()">Create Array</button>
+
+    <p id="output"></p>
+
+    <button onclick="appendObject()">Append Object</button>
+
+    <button onclick="checkArray()">Check Array</button>
+
+    <button onclick="removeLast()">Pop</button>
+
+    <button onclick="removeFirst()">Shift</button>
+
+    <button onclick="addFirst()">Unshift</button>
+
+    <p id="result"></p>
+
+    <script>
+      let arr = [];
+
+      // Create array
+      function createArray() {
+        let n = Number(document.getElementById("size").value);
+
+        arr = [];
+
+        for (let i = 0; i < n; i++) {
+          arr.push(prompt("Enter element " + (i + 1)));
+        }
+
+        display();
+      }
+
+      // Append object
+      function appendObject() {
+        let obj = {
+          name: "Yash",
+          age: 21,
+        };
+
+        arr.push(obj);
+
+        display();
+
+        document.getElementById("result").innerHTML =
+          "Object added successfully";
+      }
+
+      // Check array
+      function checkArray() {
+        document.getElementById("result").innerHTML =
+          "Is array? " + Array.isArray(arr);
+      }
+
+      // Remove last element
+      function removeLast() {
+        arr.pop();
+        display();
+      }
+
+      // Remove first element
+      function removeFirst() {
+        arr.shift();
+        display();
+      }
+
+      // Add element at beginning
+      function addFirst() {
+        arr.unshift("New Element");
+        display();
+      }
+
+      // Display array
+      function display() {
+        document.getElementById("output").innerHTML =
+          "Array: " + JSON.stringify(arr);
+      }
+    </script>
+  </body>
+</html>

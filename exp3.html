@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>String Operations</h1>
+
+    <input type="text" id="str" placeholder="Enter String" />
+
+    <button id="revBtn" onclick="reverseString()">Reverse</button>
+
+    <p id="output"></p>
+
+    <input type="text" id="oldChar" placeholder="Enter Old Character" />
+    <input type="text" id="newChar" placeholder="Enter New Character" />
+
+    <button id="replBtn" onclick="replaceChar()">Replace</button>
+    <p id="replaced"></p>
+
+    <button id="palindrome" onclick="checkPalindrone()">
+      Check Palindrome
+    </button>
+
+    <p id="palindrome"></p>
+
+    <script>
+      function reverseString() {
+        let str = document.getElementById("str").value;
+        let s = "";
+        for (let i = str.length - 1; i >= 0; i--) {
+          s += str[i];
+        }
+        document.getElementById("output").innerHTML = s;
+      }
+
+      function replaceChar() {
+        let str = document.getElementById("str").value;
+        let oldChar = document.getElementById("oldChar").value;
+        let newChar = document.getElementById("newChar").value;
+
+        let s = "";
+        for (let i = 0; i < str.length; i++) {
+          if (str[i] == oldChar) {
+            s += newChar;
+          } else {
+            s += str[i];
+          }
+        }
+        document.getElementById("replaced").innerHTML = s;
+      }
+
+      function checkPalindrone() {
+        let str = document.getElementById("str").value;
+        let rev = "";
+        for (let i = str.length - 1; i >= 0; i--) {
+          rev += str[i];
+        }
+
+        document.getElementById("palindrome").innerHTML = str == rev;
+      }
+    </script>
+  </body>
+</html>
