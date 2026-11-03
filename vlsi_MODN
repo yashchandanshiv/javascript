@@ -1,0 +1,149 @@
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+
+entity mod25 is
+Port (
+    rst : in STD_LOGIC;
+    pr  : in STD_LOGIC;
+    clk : in STD_LOGIC;
+    dir : in STD_LOGIC;
+    Q   : out STD_LOGIC_VECTOR(4 downto 0)
+);
+end mod25;
+
+architecture behavior of mod25 is
+
+signal temp : STD_LOGIC_VECTOR(4 downto 0) := "00000";
+
+begin
+
+process(rst, pr, clk)
+begin
+    if rst = '1' then
+        temp <= "00000";
+
+    elsif pr = '1' then
+        temp <= "11111";
+
+    elsif falling_edge(clk) then
+
+        if dir = '1' then
+            -- UP counting
+            if temp < 24 then
+                temp <= temp + 1;
+            else
+                temp <= "00000";
+            end if;
+
+        else
+            -- DOWN counting
+            if temp > 7 then
+                temp <= temp - 1;
+            else
+                temp <= "11111";
+            end if;
+
+        end if;
+    end if;
+end process;
+
+Q <= temp;
+
+end behavior;
+
+
+
+#TestBench
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity mod25_tb is
+end mod25_tb;
+
+architecture behavior of mod25_tb is
+
+component mod25
+Port (
+    rst : in STD_LOGIC;
+    pr  : in STD_LOGIC;
+    clk : in STD_LOGIC;
+    dir : in STD_LOGIC;
+    Q   : out STD_LOGIC_VECTOR(4 downto 0)
+);
+end component;
+
+signal rst : STD_LOGIC := '0';
+signal pr  : STD_LOGIC := '0';
+signal clk : STD_LOGIC := '0';
+signal dir : STD_LOGIC := '0';
+signal Q   : STD_LOGIC_VECTOR(4 downto 0);
+
+begin
+
+-- Connect counter
+uut: mod25 PORT MAP (
+    rst => rst,
+    pr  => pr,
+    clk => clk,
+    dir => dir,
+    Q   => Q
+);
+
+-- Clock generation
+clk_process: process
+begin
+    clk <= '0';
+    wait for 5 ns;
+    clk <= '1';
+    wait for 5 ns;
+end process;
+
+-- Direction control
+dir_process: process
+begin
+    dir <= '0';
+    wait for 320 ns;
+    dir <= '1';
+    wait for 320 ns;
+    dir <= '0';
+    wait;
+end process;
+
+-- Reset
+rst_process: process
+begin
+    wait for 680 ns;
+    rst <= '1';
+    wait for 40 ns;
+    rst <= '0';
+    wait;
+end process;
+
+-- Preset
+pr_process: process
+begin
+    wait for 750 ns;
+    pr <= '1';
+    wait for 40 ns;
+    pr <= '0';
+    wait;
+end process;
+
+end behavior;
+
+
+
+# PlanAhead Generated physical constraints
+NET "Q[4]" LOC = P164;
+NET "Q[3]" LOC = P162;
+NET "Q[2]" LOC = P161;
+NET "Q[1]" LOC = P160;
+NET "Q[0]" LOC = P153;
+NET "clk" LOC = P132;
+NET "dir" LOC = P202;
+NET "pr" LOC = P204;
+NET "rst" LOC = P194;

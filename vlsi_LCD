@@ -1,0 +1,202 @@
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity LCD_FSM is
+port (
+    rst        : in STD_LOGIC;
+    clk_12Mhz  : in STD_LOGIC;
+    lcd_rs     : out STD_LOGIC;
+    lcd_en     : out STD_LOGIC;
+    lcd_data   : out STD_LOGIC_VECTOR(7 downto 0)
+);
+end LCD_FSM;
+
+architecture behavior of LCD_FSM is
+
+signal div : STD_LOGIC_VECTOR(15 downto 0) := (others => '0');
+signal clk_fsm : STD_LOGIC;
+
+type state_type is (reset, func, mode, cur, clear,
+                    d0, d1, d2, d3, d4, hold);
+
+signal ps, ns : state_type;
+signal rs : STD_LOGIC;
+signal data : STD_LOGIC_VECTOR(7 downto 0);
+
+begin
+
+-- Clock divider
+process(clk_12Mhz, rst)
+begin
+    if rst = '1' then
+        div <= (others => '0');
+    elsif rising_edge(clk_12Mhz) then
+        div <= div + 1;
+    end if;
+end process;
+
+clk_fsm <= div(15);
+
+-- State register
+process(clk_fsm, rst)
+begin
+    if rst = '1' then
+        ps <= reset;
+    elsif rising_edge(clk_fsm) then
+        ps <= ns;
+    end if;
+end process;
+
+-- State operation
+process(ps)
+begin
+    case ps is
+
+        when reset =>
+            ns <= func;
+            rs <= '0';
+            data <= "00111000";
+
+        when func =>
+            ns <= mode;
+            rs <= '0';
+            data <= "00111000";
+
+        when mode =>
+            ns <= cur;
+            rs <= '0';
+            data <= "00000110";
+
+        when cur =>
+            ns <= clear;
+            rs <= '0';
+            data <= "00001100";
+
+        when clear =>
+            ns <= d0;
+            rs <= '0';
+            data <= "00000001";
+
+        when d0 =>
+            ns <= d1;
+            rs <= '1';
+            data <= "01010000";
+
+        when d1 =>
+            ns <= d2;
+            rs <= '1';
+            data <= "01001001";
+
+        when d2 =>
+            ns <= d3;
+            rs <= '1';
+            data <= "01000011";
+
+        when d3 =>
+            ns <= d4;
+            rs <= '1';
+            data <= "01010100";
+
+        when d4 =>
+            ns <= hold;
+            rs <= '1';
+            data <= "00100000";
+
+        when hold =>
+            ns <= hold;
+            rs <= '0';
+            data <= "00000000";
+
+        when others =>
+            ns <= reset;
+            rs <= '0';
+            data <= "00000001";
+
+    end case;
+end process;
+
+lcd_en <= clk_fsm;
+lcd_rs <= rs;
+lcd_data <= data;
+
+end behavior;
+
+
+
+#TestBench
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity LCD_Test is
+end LCD_Test;
+
+architecture behavior of LCD_Test is
+
+component LCD_FSM
+port (
+    rst        : in STD_LOGIC;
+    clk_12Mhz  : in STD_LOGIC;
+    lcd_rs     : out STD_LOGIC;
+    lcd_en     : out STD_LOGIC;
+    lcd_data   : out STD_LOGIC_VECTOR(7 downto 0)
+);
+end component;
+
+signal rst       : STD_LOGIC := '0';
+signal clk_12Mhz : STD_LOGIC := '0';
+
+signal lcd_rs   : STD_LOGIC;
+signal lcd_en   : STD_LOGIC;
+signal lcd_data : STD_LOGIC_VECTOR(7 downto 0);
+
+begin
+
+-- Connect design
+uut: LCD_FSM port map (
+    rst => rst,
+    clk_12Mhz => clk_12Mhz,
+    lcd_rs => lcd_rs,
+    lcd_en => lcd_en,
+    lcd_data => lcd_data
+);
+
+-- Clock generation
+process
+begin
+    clk_12Mhz <= '0';
+    wait for 5 ns;
+
+    clk_12Mhz <= '1';
+    wait for 5 ns;
+end process;
+
+-- Reset generation
+process
+begin
+    rst <= '1';
+    wait for 20 ns;
+
+    rst <= '0';
+    wait;
+end process;
+
+end behavior;
+
+
+
+# PlanAhead Generated physical constraints
+NET "clk_12Mhz" LOC = P80;
+NET "rst" LOC = P204;
+NET "lcd_rs" LOC = P48;
+NET "lcd_en" LOC = P49;
+NET "lcd_data[0]" LOC = P47;
+NET "lcd_data[1]" LOC = P41;
+NET "lcd_data[2]" LOC = P39;
+NET "lcd_data[3]" LOC = P35;
+NET "lcd_data[4]" LOC = P33;
+NET "lcd_data[5]" LOC = P31;
+NET "lcd_data[6]" LOC = P29;
+NET "lcd_data[7]" LOC = P24;
