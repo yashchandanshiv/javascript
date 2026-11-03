@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Area Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Area Calculator</h1>
+
+        <p>Name: Sameer Dharmadhikari</p>
+        <p>Roll No: 42125</p>
+        <p>Batch: Q5</p>
+
+        <hr>
+
+        <h2>1. Triangle</h2>
+        <input type="number" id="a" placeholder="Side A">
+        <input type="number" id="b" placeholder="Side B">
+        <input type="number" id="c" placeholder="Side C">
+
+        <button onclick="triangle()">Calculate</button>
+        <button onclick="reset('tri')">Reset</button>
+        <p id="tri"></p>
+
+        <hr>
+
+        <h2>2. Rectangle</h2>
+        <input type="number" id="l" placeholder="Length">
+        <input type="number" id="w" placeholder="Width">
+
+        <button onclick="rectangle()">Calculate</button>
+        <button onclick="reset('rect')">Reset</button>
+        <p id="rect"></p>
+
+        <hr>
+
+        <h2>3. Circle</h2>
+        <input type="number" id="r" placeholder="Radius">
+
+        <button onclick="circle()">Calculate</button>
+        <button onclick="reset('circle')">Reset</button>
+        <p id="circle"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

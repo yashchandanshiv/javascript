@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Countdown Timer</title>
+
+</head>
+
+<style>
+    body {
+        text-align: center;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    input {
+        display: block;
+        margin: 0 auto 10px auto;
+    }
+
+    button {
+        margin: 5px;
+        padding: 8px 15px;
+    }
+</style>
+
+<body>
+
+    <h2>Countdown Timer</h2>
+
+    <label>Enter Date and Time:</label>
+
+    <input type="datetime-local" id="date">
+
+    <button onclick="startCountdown()">Start Countdown</button>
+
+    <button onclick="reset()">Reset</button>
+
+    <h3 id="result"></h3>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

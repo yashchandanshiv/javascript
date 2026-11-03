@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="formPage">
+        <h1>Student Information Form</h1>
+
+        <form onsubmit="validateForm(event)">
+
+            Name:
+            <input type="text" id="name">
+            <span id="nameError"></span>
+            <br><br>
+
+            Address:
+            <textarea id="address"></textarea>
+            <span id="addressError"></span>
+            <br><br>
+
+            City:
+            <input type="text" id="city">
+            <span id="cityError"></span>
+            <br><br>
+
+            State:
+            <input type="text" id="state">
+            <span id="stateError"></span>
+            <br><br>
+
+            Gender:
+            <input type="radio" name="gender" value="Male"> Male
+            <input type="radio" name="gender" value="Female"> Female
+            <span id="genderError"></span>
+            <br><br>
+
+            Mobile:
+            <input type="text" id="mobile">
+            <span id="mobileError"></span>
+            <br><br>
+
+            Email:
+            <input type="text" id="email">
+            <span id="emailError"></span>
+            <br><br>
+
+            <button type="submit">Submit</button>
+            <button type="button" onclick="resetForm()">Reset</button>
+
+        </form>
+    </div>
+
+    <div id="welcomePage">
+        <h1>Congratulations!</h1>
+        <h2>Welcome to our website.</h2>
+        <p>Information submitted successfully.</p>
+        <button onclick="showForm()">Back to Form</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

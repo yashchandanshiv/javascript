@@ -1,0 +1,20 @@
+
+body {
+    text-align: center;
+    font-family: Arial;
+    padding-top: 100px;
+}
+
+#box {
+    width: 200px;
+    height: 100px;
+    background-color: lightgray;
+    line-height: 100px;
+    margin: 20px auto;
+    border: 1px solid black;
+}
+
+input {
+    padding: 8px;
+    margin: 10px;
+}
